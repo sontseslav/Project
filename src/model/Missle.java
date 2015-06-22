@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sysview;
-
+package model;
 
 /**
  *
  * @author user
  */
-public class Main {
-    public static void main(String[] args) {
-        OperatingSystem os = new OperatingSystem();
-        System.out.println(os.getOSInfo());
-    }
+public class Missle {
+    
 }
