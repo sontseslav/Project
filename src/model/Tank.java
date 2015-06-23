@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public abstract class Tank {
     protected int x;//coordinates of tank
     protected int y;
+    protected int tankWidth;
     protected int armor;
     protected ArrayList<Missle> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
@@ -23,14 +24,23 @@ public abstract class Tank {
 
     public Tank(int armor, ArrayList<Missle> unitsOfFire, 
             ArrayList<Tank> listOfEnemies, int life, int tubeDirection, 
-            int x, int y) {
+            int x, int y, int tankWidth) {
         this.armor = armor;
         this.unitsOfFire = unitsOfFire;
         this.listOfEnemies = listOfEnemies;
         this.life = life;
         this.tubeDirection = tubeDirection;
-        this.x = x;
-        this.y = y;
+        this.x = x;                         //is
+        this.y = y;                         //it
+        this.tankWidth = tankWidth; // = 3  //needed?
+    }
+    
+    public int getX(){
+        return this.x;
+    }
+    
+    public int getY(){
+        return this.y;
     }
     
     public boolean isAlive(){
@@ -53,8 +63,7 @@ public abstract class Tank {
         return "Say ouch";
     }
     
-    public String gotEnemy(){
-        //if someone uses get hit and veapons is mine - operatet by battlefield?
+    public String gotEnemy(){//called by missle
         return "Say take it";//and display points
     }
     
