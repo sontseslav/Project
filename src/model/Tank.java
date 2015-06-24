@@ -14,17 +14,25 @@ import java.util.ArrayList;
 public abstract class Tank {
     protected int x;//coordinates of tank
     protected int y;
-    protected int tankWidth;
+    protected int tankWidth = 3;
+    protected String name;
     protected int armor;
     protected ArrayList<Missle> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
     protected int life;
     protected int tubeDirection;
     protected int shutPower;
+    
+    protected ArrayList<String> warlords = new ArrayList<String>(){{//anonimous class using
+        add("Alexander the Great");add("Leonidas I"); add("Genghis Khan"); 
+        add("Hannibal Barca"); add("Gaius Julius Caesar");
+        add("Spartacus");add("Salah-ad-Din");
+    }};
 
-    public Tank(int armor, ArrayList<Missle> unitsOfFire, 
+    public Tank(String name,int armor, ArrayList<Missle> unitsOfFire, 
             ArrayList<Tank> listOfEnemies, int life, int tubeDirection, 
-            int x, int y, int tankWidth) {
+            int x, int y) {
+        this.name = name;
         this.armor = armor;
         this.unitsOfFire = unitsOfFire;
         this.listOfEnemies = listOfEnemies;
@@ -32,7 +40,7 @@ public abstract class Tank {
         this.tubeDirection = tubeDirection;
         this.x = x;                         //is
         this.y = y;                         //it
-        this.tankWidth = tankWidth; // = 3  //needed?
+        //this.tankWidth = tankWidth; // = 3  //needed?
     }
     
     public int getX(){
@@ -44,7 +52,7 @@ public abstract class Tank {
     }
     
     public boolean isAlive(){
-        return (this.life > 0);
+        return this.life > 0;
     }
     
 //    public void getListOfEmenied(BattleField instance){

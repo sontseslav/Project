@@ -18,7 +18,7 @@ public class Console extends AbstractViewer{
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < instance.getFildSizeVertical();i++){
             for (int j = 0; j < instance.getFildSizeHorizontal();j++){
-                if (i == landscape[j][1] && j == landscape[j][0]){
+                if (i == this.round(landscape[j][1]) && j == (int)landscape[j][0]){
                     battleField[i][j] = 'X';
                 }else{
                     battleField[i][j] = ' ';
@@ -42,6 +42,11 @@ public class Console extends AbstractViewer{
         int r = instance.getTankWidth();
         //drawCircle(x,y,r);
         //modifyLandscape(x,y,r);
+    }
+    
+    private int round(double x){
+        x = (x % 1 > 0.5) ? x+1 : x;
+        return (int)x;
     }
     
 }

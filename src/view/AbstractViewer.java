@@ -16,7 +16,7 @@ public abstract class AbstractViewer {
     protected BattleField instance = BattleField.getInstance();
     protected char[][] battleField = 
             new char[instance.getFildSizeVertical()][instance.getFildSizeHorizontal()];
-    protected int[][] landscape = instance.getLandscape();
+    protected double[][] landscape = instance.getLandscape();
     
     public abstract void drawLandscape();
     public abstract void drawTanks();

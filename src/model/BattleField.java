@@ -12,12 +12,12 @@ import java.util.Random;
  *
  * @author user
  */
-public class BattleField {
+public class BattleField <T extends Tank> {
     private ArrayList<Tank> listOfTanks;
     private int[][] tankCoords;
     private final int tankWidth = 3;
     private static final BattleField instance = new BattleField(110,36);//size in chars
-    private int[][] landscape; //[i;y]
+    private double[][] landscape; //[i;y]
     private int fildSizeHorizontal;
     private int fildSizeVertical;
     
@@ -40,7 +40,7 @@ public class BattleField {
         return tankCoords;
     }
 
-    public int[][] getLandscape() {
+    public double[][] getLandscape() {
         if (landscape == null) this.createLandscape();
         return landscape;
     }
@@ -55,9 +55,9 @@ public class BattleField {
         return instance;
     }
     
-    private int[][] createLandscape(){
+    private double[][] createLandscape(){
         Random rand = new Random();
-        landscape = new int[this.fildSizeHorizontal][2];
+        landscape = new double[this.fildSizeHorizontal][2];
         /**
         * y=A*sin(w(x-a))+C 
         * C = 4.5 
@@ -71,22 +71,16 @@ public class BattleField {
         double preA = rand.nextInt(45*10000)/100000;
         double A = (preA == 0) ? 0.00001 : preA;
         double P = (rand.nextInt(319000000))/300000+36.66666;
+        //double P = (rand.nextInt(16555555))/100000+5.55555;
         double w = 2*Math.PI/P;
         double a = P/4 + rand.nextInt((int)Math.ceil(P*10000))/1100000;
         for (int i = 0; i < fildSizeHorizontal; i++){
             landscape[i][0] = i;
-            landscape[i][1] = this.round(A*Math.sin(w*(i-a)) + C + 27);
-            //System.out.printf("%s) As is: %s, rounded: %s, casted to int: %s;%n",i,
-            //        A*Math.sin(w*(i-a))+C+27,
-            //        this.round(A*Math.sin(w*(i-a)) + C +27),
-            //        landscape[i][1]);
+            landscape[i][1] = A*Math.sin(w*(i-a)) + C 
+                    + (fildSizeVertical-C*2); //moving landscape down
+            //System.out.printf("%s) As is: %s: %s;%n",i,landscape[i][1]);
         }
         return landscape;
-    }
-    
-    private int round(double x){
-        x = (x % 1 > 0.5) ? x+1 : x;
-        return (int)x;
     }
     
     private int[][] createTanks(int tankQuantity) {//max = 7
@@ -94,11 +88,10 @@ public class BattleField {
         int distance = (int)fildSizeHorizontal/(tankQuantity*tankWidth);
         for (int i = 0; i < tankQuantity; i++){
             tankCoords[i][0] = distance*(1+i) + tankWidth*i + tankWidth/2;//center of tank
-            tankCoords[i][1] = landscape[tankCoords[i][0]][1];
+            tankCoords[i][1] = (int) landscape[tankCoords[i][0]][1];
         }
         // return coordinates of tanks
         return tankCoords;
     }
-    
    
 }

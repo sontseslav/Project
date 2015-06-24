@@ -9,6 +9,16 @@ package model;
  *
  * @author user
  */
-public class Missle {
-    
-}
+public abstract class Missle{
+        protected int weight;
+        protected int imposedArea; //radius of explosion
+        protected int yield; //points of hit in explosion area
+
+        public Missle() {
+        }
+        
+        public abstract void explode();
+        
+        public abstract int[][]fly();
+        
+    }
