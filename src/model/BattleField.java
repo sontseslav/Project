@@ -76,7 +76,7 @@ public class BattleField <T extends Tank> {
         double a = P/4 + rand.nextInt((int)Math.ceil(P*10000))/1100000;
         for (int i = 0; i < fildSizeHorizontal; i++){
             landscape[i][0] = i;
-            landscape[i][1] = A*Math.sin(w*(i-a)) + C 
+            landscape[i][1] = A*Math.sin(w*(i-a)) + C +
                     + (fildSizeVertical-C*2); //moving landscape down
             //System.out.printf("%s) As is: %s: %s;%n",i,landscape[i][1]);
         }
