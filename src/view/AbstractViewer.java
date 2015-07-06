@@ -13,13 +13,20 @@ import model.Tank;
  * @author user
  */
 public abstract class AbstractViewer {
-    protected BattleField instance = BattleField.getInstance();
-    protected char[][] battleField = 
+    protected BattleField instance;
+    protected char[][] battleField;
+    protected double[][] landscape;
+    protected double[][] tankCoords;
+
+    public AbstractViewer() {
+        this.instance = BattleField.getInstance(110,36);//size in chars
+        battleField = 
             new char[instance.getFildSizeVertical()][instance.getFildSizeHorizontal()];
-    protected double[][] landscape = instance.getLandscape();
+        landscape = instance.getLandscape();
+    }
     
     public abstract void drawLandscape();
-    public abstract void drawTanks();
+    public abstract void drawTanks(int tankQuantity);
     public abstract void drawTankExplode(Tank tank);
     
     

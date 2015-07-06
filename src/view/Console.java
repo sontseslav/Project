@@ -15,7 +15,7 @@ public class Console extends AbstractViewer{
 
     @Override
     public void drawLandscape() {
-        StringBuilder sb = new StringBuilder();
+        //StringBuilder sb = new StringBuilder();
         for (int i = 0; i < instance.getFildSizeVertical();i++){
             for (int j = 0; j < instance.getFildSizeHorizontal();j++){
                 if (i == this.round(landscape[j][1]) && j == (int)landscape[j][0]){
@@ -24,15 +24,26 @@ public class Console extends AbstractViewer{
                     battleField[i][j] = ' ';
                 }
             }
-            sb.append(battleField[i]);
-            sb.append("\r\n");
+            //sb.append(battleField[i]);
+            //sb.append("\r\n");
         }
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
     }
 
     @Override
-    public void drawTanks() {
-        
+    public void drawTanks(int tankQuantity) {
+       tankCoords = instance.getTankCoords(tankQuantity);
+       int x,y = 0;
+       for(int i = 0; i < tankQuantity;i++){
+           x = (int)tankCoords[i][0];
+           y = round(tankCoords[i][1])-1;
+           battleField[y][x]='O';
+           battleField[y][x+1]='O';
+           battleField[y][x-1]='O';
+           battleField[y-1][x]='o';
+           battleField[y-1][x+1]='-';
+           showBattleField();
+       }
     }
 
     @Override
@@ -49,4 +60,12 @@ public class Console extends AbstractViewer{
         return (int)x;
     }
     
+    private void showBattleField(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < instance.getFildSizeVertical();i++){
+            sb.append(battleField[i]);
+            sb.append("\r\n");
+        }
+        System.out.println(sb.toString());
+    }
 }

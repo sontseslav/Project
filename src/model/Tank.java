@@ -6,6 +6,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  *
@@ -17,7 +19,7 @@ public abstract class Tank {
     protected int tankWidth = 3;
     protected String name;
     protected int armor;
-    protected ArrayList<Missle> unitsOfFire;
+    protected HashMap<String,Integer> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
     protected int life;
     protected int tubeDirection;
@@ -29,15 +31,16 @@ public abstract class Tank {
         add("Spartacus");add("Salah-ad-Din");
     }};
 
-    public Tank(String name,int armor, ArrayList<Missle> unitsOfFire, 
-            ArrayList<Tank> listOfEnemies, int life, int tubeDirection, 
+    public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 
+            ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection,*/ 
             int x, int y) {
-        this.name = name;
+        Random rand = new Random();
+        this.name = (name != null)?name:warlords.get(rand.nextInt(warlords.size()));//2 equal names may occur
         this.armor = armor;
-        this.unitsOfFire = unitsOfFire;
-        this.listOfEnemies = listOfEnemies;
+        //this.unitsOfFire = unitsOfFire;
+        //this.listOfEnemies = listOfEnemies;
         this.life = life;
-        this.tubeDirection = tubeDirection;
+        //this.tubeDirection = tubeDirection;
         this.x = x;                         //is
         this.y = y;                         //it
         //this.tankWidth = tankWidth; // = 3  //needed?

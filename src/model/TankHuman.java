@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -13,10 +14,10 @@ import java.util.ArrayList;
  */
 public class TankHuman extends Tank{
 
-    public TankHuman(String name, int armor, ArrayList<Missle> unitsOfFire, 
-            ArrayList<Tank> listOfEnemies, int life, int tubeDirection, 
+    public TankHuman(String name, int armor, /*HashMap<String,Integer> unitsOfFire, 
+            ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection, */
             int x, int y) {
-        super(name, armor, unitsOfFire, listOfEnemies, life, tubeDirection, x, y);
+        super(name, armor, /*unitsOfFire, listOfEnemies,*/ life, /*tubeDirection,*/ x, y);
     }
 
     @Override

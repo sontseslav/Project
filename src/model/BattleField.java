@@ -14,9 +14,9 @@ import java.util.Random;
  */
 public class BattleField <T extends Tank> {
     private ArrayList<Tank> listOfTanks;
-    private int[][] tankCoords;
+    private double[][] tankCoords;
     private final int tankWidth = 3;
-    private static final BattleField instance = new BattleField(110,36);//size in chars
+    private static BattleField instance;
     private double[][] landscape; //[i;y]
     private int fildSizeHorizontal;
     private int fildSizeVertical;
@@ -24,6 +24,7 @@ public class BattleField <T extends Tank> {
     private BattleField(int fildSizeHorizontal, int fildSizeVertical) {
         this.fildSizeHorizontal = fildSizeHorizontal;
         this.fildSizeVertical = fildSizeVertical;
+        listOfTanks = new ArrayList<>();
     }
 
     public int getFildSizeHorizontal() {
@@ -34,9 +35,9 @@ public class BattleField <T extends Tank> {
         return fildSizeVertical;
     }
 
-    public int[][] getTankCoords() {
+    public double [][] getTankCoords(int tankQuantity) {
         if (landscape == null) this.createLandscape();
-        if (tankCoords == null) this.createTanks(tankWidth);
+        if (tankCoords == null) this.createTanks(tankQuantity);
         return tankCoords;
     }
 
@@ -51,7 +52,8 @@ public class BattleField <T extends Tank> {
     
     
     
-    public static BattleField getInstance(){//should be invoked first of all
+    public static BattleField getInstance(int width,int hight){//should be invoked first of all
+        instance = new BattleField(width, hight);
         return instance;
     }
     
@@ -83,12 +85,15 @@ public class BattleField <T extends Tank> {
         return landscape;
     }
     
-    private int[][] createTanks(int tankQuantity) {//max = 7
-        tankCoords = new int[tankQuantity][2];
-        int distance = (int)fildSizeHorizontal/(tankQuantity*tankWidth);
+    private double [][] createTanks(int tankQuantity) {//max = 7
+        tankCoords = new double[tankQuantity][2];
+        //Tank t = null;
+        int distance = (int)fildSizeHorizontal/tankQuantity;
         for (int i = 0; i < tankQuantity; i++){
-            tankCoords[i][0] = distance*(1+i) + tankWidth*i + tankWidth/2;//center of tank
-            tankCoords[i][1] = (int) landscape[tankCoords[i][0]][1];
+            tankCoords[i][0] = distance/2 + distance*i;
+            tankCoords[i][1] = landscape[(int)tankCoords[i][0]][1]; //tank shoudn't be under the ground
+            //t = new TankHuman(null, 0, 100, tankCoords[i][0], tankCoords[i][1]);
+            //listOfTanks.add(t);
         }
         // return coordinates of tanks
         return tankCoords;

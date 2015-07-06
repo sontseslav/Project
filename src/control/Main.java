@@ -5,7 +5,7 @@
  */
 package control;
 
-import model.Tank;
+
 import view.AbstractViewer;
 import view.Console;
 
@@ -17,6 +17,6 @@ public class Main {
     public static void main(String[] args) {
         AbstractViewer absview = new Console();
         absview.drawLandscape();
-        ;
+        absview.drawTanks(10);//10 max
     }
 }
