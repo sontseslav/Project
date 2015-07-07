@@ -7,6 +7,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Random;
 public abstract class Tank {
     protected int x;//coordinates of tank
     protected int y;
-    protected int tankWidth = 3;
+    //protected int tankWidth;
     protected String name;
     protected int armor;
     protected HashMap<String,Integer> unitsOfFire;
@@ -25,17 +26,18 @@ public abstract class Tank {
     protected int tubeDirection;
     protected int shutPower;
     
-    protected ArrayList<String> warlords = new ArrayList<String>(){{//anonimous class using
+    protected LinkedList<String> warlords = new LinkedList<String>(){{//anonimous class using
         add("Alexander the Great");add("Leonidas I"); add("Genghis Khan"); 
-        add("Hannibal Barca"); add("Gaius Julius Caesar");
-        add("Spartacus");add("Salah-ad-Din");
+        add("Hannibal Barca"); add("Gaius Julius Caesar");add("Napoleon Bonaparte");
+        add("Spartacus");add("Salah-ad-Din");add("Stepan Bandera");add("Atilla");
+        add("Hernan Kortes");add("Oda Nobunaga");
     }};
 
     public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 
             ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection,*/ 
             int x, int y) {
         Random rand = new Random();
-        this.name = (name != null)?name:warlords.get(rand.nextInt(warlords.size()));//2 equal names may occur
+        this.name = (name != null)?name:warlords.remove(rand.nextInt(warlords.size()));//2 equal names may occur
         this.armor = armor;
         //this.unitsOfFire = unitsOfFire;
         //this.listOfEnemies = listOfEnemies;

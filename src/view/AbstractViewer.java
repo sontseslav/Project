@@ -18,11 +18,8 @@ public abstract class AbstractViewer {
     protected double[][] landscape;
     protected double[][] tankCoords;
 
-    public AbstractViewer() {
-        this.instance = BattleField.getInstance(110,36);//size in chars
-        battleField = 
-            new char[instance.getFildSizeVertical()][instance.getFildSizeHorizontal()];
-        landscape = instance.getLandscape();
+    public AbstractViewer(int width,int hight,int tankWidth) {
+        this.instance = BattleField.getInstance(width,hight,tankWidth);//size in chars
     }
     
     public abstract void drawLandscape();

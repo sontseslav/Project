@@ -6,12 +6,23 @@
 package view;
 
 import model.Tank;
+import model.TankHuman;
 
 /**
  *
  * @author user
  */
 public class Console extends AbstractViewer{
+    private static final int fieldWidth = 110;
+    private static final int fieldHight = 36;
+    private static final int tankWidth = 3;
+
+    public Console() {//Console(110,36,3);//size in chars
+        super(fieldWidth,fieldHight,tankWidth);
+        battleField = 
+            new char[instance.getFildSizeVertical()][instance.getFildSizeHorizontal()];
+        landscape = instance.getLandscape();
+    }
 
     @Override
     public void drawLandscape() {
@@ -32,18 +43,23 @@ public class Console extends AbstractViewer{
 
     @Override
     public void drawTanks(int tankQuantity) {
-       tankCoords = instance.getTankCoords(tankQuantity);
-       int x,y = 0;
-       for(int i = 0; i < tankQuantity;i++){
-           x = (int)tankCoords[i][0];
-           y = round(tankCoords[i][1])-1;
-           battleField[y][x]='O';
-           battleField[y][x+1]='O';
-           battleField[y][x-1]='O';
-           battleField[y-1][x]='o';
-           battleField[y-1][x+1]='-';
-           showBattleField();
-       }
+        if (tankQuantity > fieldWidth/(tankWidth*3)){
+            System.out.println("Too many tanks");
+        }else{
+            tankCoords = instance.getTankCoords(tankQuantity);
+            int x,y = 0;
+            for(int i = 0; i < tankQuantity;i++){
+                x = (int)tankCoords[i][0];
+                y = round(tankCoords[i][1])-1;
+                instance.addToTankList(new TankHuman(null, 0, 100, x, y));
+                battleField[y][x]='O';
+                battleField[y][x+1]='O';
+                battleField[y][x-1]='O';
+                battleField[y-1][x]='O';
+                battleField[y-1][x+1]='-';
+            }
+            showBattleField();
+        }
     }
 
     @Override
@@ -67,5 +83,9 @@ public class Console extends AbstractViewer{
             sb.append("\r\n");
         }
         System.out.println(sb.toString());
+    }
+    
+    private void displayNames(Tank t){
+        
     }
 }

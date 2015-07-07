@@ -15,8 +15,8 @@ import view.Console;
  */
 public class Main {
     public static void main(String[] args) {
-        AbstractViewer absview = new Console();
+        AbstractViewer absview = new Console();//size in chars+tankWidth
         absview.drawLandscape();
-        absview.drawTanks(10);//10 max
+        absview.drawTanks(12);//12 max
     }
 }
