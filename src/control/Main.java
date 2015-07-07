@@ -17,6 +17,6 @@ public class Main {
     public static void main(String[] args) {
         AbstractViewer absview = new Console();//size in chars+tankWidth
         absview.drawLandscape();
-        absview.drawTanks(12);//12 max
+        absview.drawTanks(5);//12 max
     }
 }
