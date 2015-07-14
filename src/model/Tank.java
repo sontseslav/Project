@@ -26,11 +26,11 @@ public abstract class Tank {
     protected int tubeDirection;
     protected int shutPower;
     
-    protected LinkedList<String> warlords = new LinkedList<String>(){{//anonimous class using
+    protected LinkedList<String> warlords = new LinkedList<String>(){{//Anonymous class using
         add("Alexander the Great");add("Leonidas I"); add("Genghis Khan"); 
         add("Hannibal Barca"); add("Gaius Julius Caesar");add("Napoleon Bonaparte");
         add("Spartacus");add("Salah-ad-Din");add("Stepan Bandera");add("Atilla");
-        add("Hernan Kortes");add("Oda Nobunaga");
+        add("Hernan Kortes");add("Oda Nobunaga");add("Eugen Konovalets");add("Nestor Makhno");
     }};
 
     public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 

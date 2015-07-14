@@ -76,15 +76,15 @@ public class BattleField <T extends Tank> {
         * a=P/4+b
         * w = 2*pi/P
         */ 
-        final double C = fildSizeVertical/8.0;
-        double preA = rand.nextInt((int)(C*100000))/100000;
-        double A = (preA == 0) ? 0.00005 : preA;//? 0.00001
-        //double P = (rand.nextInt(319000000))/300000+36.66666;
-        double P = rand.nextInt(fildSizeHorizontal-(int)(fildSizeHorizontal/3))
-                +fildSizeHorizontal/3;
-        //double P = (rand.nextInt(16555555))/100000+5.55555;
+		double Ad = rand.nextDouble();
+		double Pd = rand.nextDouble();
+		double ad = rand.nextDouble();
+		System.out.println("Vertical: "+fildSizeVertical+" Horizontal: "+fildSizeHorizontal);
+        double C = fildSizeVertical/((8.0*Ad < 3)?(8.0*Ad+3):(8.0*Ad));
+        double A = C*Ad;
+        double P = fildSizeHorizontal/(3*Pd);
         double w = 2*Math.PI/P;
-        double a = P/4 + rand.nextInt((int)Math.ceil(P*10000))/1100000;
+        double a = P/4+P*10000*ad/15000;
         for (int i = 0; i < fildSizeHorizontal; i++){
             landscape[i][0] = i;
             landscape[i][1] = A*Math.sin(w*(i-a)) + C +

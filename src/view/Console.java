@@ -26,7 +26,6 @@ public class Console extends AbstractViewer{
 
     @Override
     public void drawLandscape() {
-        //StringBuilder sb = new StringBuilder();
         for (int i = 0; i < instance.getFildSizeVertical();i++){
             for (int j = 0; j < instance.getFildSizeHorizontal();j++){
                 if (i == this.round(landscape[j][1]) && j == (int)landscape[j][0]){
@@ -35,10 +34,7 @@ public class Console extends AbstractViewer{
                     battleField[i][j] = ' ';
                 }
             }
-            //sb.append(battleField[i]);
-            //sb.append("\r\n");
         }
-        //System.out.println(sb.toString());
     }
 
     @Override

@@ -7,12 +7,14 @@ package view;
 
 import model.BattleField;
 import model.Tank;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  *
  * @author user
  */
-public abstract class AbstractViewer {
+public abstract class AbstractViewer{
     protected BattleField instance;
     protected char[][] battleField;
     protected double[][] landscape;
