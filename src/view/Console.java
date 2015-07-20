@@ -47,7 +47,7 @@ public class Console extends AbstractViewer{
             for(int i = 0; i < tankQuantity;i++){
                 x = (int)tankCoords[i][0];
                 y = round(tankCoords[i][1])-1;
-                instance.addToTankList(new TankHuman(null, 0, 100, x, y));
+                //instance.addToTankList(new TankHuman(null, 0, 100, x, y));
                 battleField[y][x]='O';
                 battleField[y][x+1]='O';
                 battleField[y][x-1]='O';

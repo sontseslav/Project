@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
+import javafx.scene.Scene;
+import javafx.scene.shape.Line;
+
 /**
  *
  * @author user
@@ -17,14 +20,15 @@ import java.util.Random;
 public abstract class Tank {
     protected int x;//coordinates of tank
     protected int y;
-    //protected int tankWidth;
+    protected Line tube;
+    protected Scene scene;
     protected String name;
     protected int armor;
     protected HashMap<String,Integer> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
     protected int life;
     protected int tubeDirection;
-    protected int shutPower;
+    protected int shootPower;
     
     protected LinkedList<String> warlords = new LinkedList<String>(){{//Anonymous class using
         add("Alexander the Great");add("Leonidas I"); add("Genghis Khan"); 
@@ -35,17 +39,17 @@ public abstract class Tank {
 
     public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 
             ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection,*/ 
-            int x, int y) {
+            int x, int y,Line tube,Scene scene) {
         Random rand = new Random();
         this.name = (name != null)?name:warlords.remove(rand.nextInt(warlords.size()));//2 equal names may occur
         this.armor = armor;
         //this.unitsOfFire = unitsOfFire;
         //this.listOfEnemies = listOfEnemies;
         this.life = life;
-        //this.tubeDirection = tubeDirection;
-        this.x = x;                         //is
-        this.y = y;                         //it
-        //this.tankWidth = tankWidth; // = 3  //needed?
+        this.x = x;                         //??
+        this.y = y;                         //??
+        this.tube = tube;
+        this.scene = scene;
     }
     
     public int getX(){
@@ -60,9 +64,9 @@ public abstract class Tank {
         return this.life > 0;
     }
     
-//    public void getListOfEmenied(BattleField instance){
-//        this.listOfEnemies = instance.listOfTanks;
-//    }
+    public void getListOfEmenied(BattleField instance){
+        //this.listOfEnemies = instance.listOfTanks;
+    }
     
     public String getHit(int hit){ //must be overriden in TankPC(Tank offender)
         int damage = this.armor - hit;

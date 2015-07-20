@@ -89,23 +89,28 @@ public class BattleField <T extends Tank> {
             landscape[i][0] = i;
             landscape[i][1] = A*Math.sin(w*(i-a)) + C +
                     + (fildSizeVertical-C*2); //moving landscape down
-            //System.out.printf("%s) As is: %s: %s;%n",i,landscape[i][1]);
         }
         return landscape;
     }
     
     private double [][] createTanks(int tankQuantity) {//max = 7
         tankCoords = new double[tankQuantity][2];
-        //Tank t = null;
         int distance = (int)fildSizeHorizontal/tankQuantity;
         for (int i = 0; i < tankQuantity; i++){
             tankCoords[i][0] = distance/2 + distance*i;
             tankCoords[i][1] = landscape[(int)tankCoords[i][0]][1]; //tank shoudn't be under the ground
-            //t = new TankHuman(null, 0, 100, tankCoords[i][0], tankCoords[i][1]);
-            //listOfTanks.add(t);
         }
         // return coordinates of tanks
         return tankCoords;
+    }
+    
+    public void startGame(){
+    	listOfTanks.get(0).listOfEnemies = listOfTanks;
+    	listOfTanks.get(1).listOfEnemies = listOfTanks;
+    	listOfTanks.get(0).setTubeDirections(0);
+    	listOfTanks.get(0).shotEnemy(null);
+    	listOfTanks.get(1).setTubeDirections(0);
+    	listOfTanks.get(1).shotEnemy(null);
     }
    
 }
