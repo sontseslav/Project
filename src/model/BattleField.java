@@ -5,14 +5,17 @@
  */
 package model;
 
+import view.JavaFX;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
  *
  * @author user
  */
-public class BattleField <T extends Tank> {
+public class BattleField /*<T extends Tank>*/ {
     private ArrayList<Tank> listOfTanks;
     private double[][] tankCoords;
     private int tankWidth;
@@ -20,6 +23,12 @@ public class BattleField <T extends Tank> {
     private double[][] landscape; //[i;y]
     private int fildSizeHorizontal;
     private int fildSizeVertical;
+    private static LinkedList<String> warlords = new LinkedList<String>(){{//Anonymous class using
+        add("Alexander the Great");add("Leonidas I"); add("Genghis Khan");
+        add("Hannibal Barca"); add("Gaius Julius Caesar");add("Napoleon Bonaparte");
+        add("Spartacus");add("Salah-ad-Din");add("Stepan Bandera");add("Atilla");
+        add("Hernan Kortes");add("Oda Nobunaga");add("Eugen Konovalets");add("Nestor Makhno");
+    }};
     
     private BattleField(int fildSizeHorizontal, int fildSizeVertical,int tankWidth) {
         this.fildSizeHorizontal = fildSizeHorizontal;
@@ -36,6 +45,14 @@ public class BattleField <T extends Tank> {
         return fildSizeVertical;
     }
 
+    public static String getWarlord(int i){
+        return warlords.remove(i);
+    }
+
+    public static int getWarlordsSize(){
+        return warlords.size();
+    }
+
     public double [][] getTankCoords(int tankQuantity) {
         if (landscape == null) this.createLandscape();
         if (tankCoords == null) this.createTanks(tankQuantity);
@@ -50,7 +67,11 @@ public class BattleField <T extends Tank> {
     public int getTankWidth() {
         return tankWidth;
     }
-    
+
+    public ArrayList<Tank> getListOfTanks(){
+        return listOfTanks;
+    }
+
     public void addToTankList(Tank t){
         this.listOfTanks.add(t);
     }
@@ -79,7 +100,7 @@ public class BattleField <T extends Tank> {
 		double Ad = rand.nextDouble();
 		double Pd = rand.nextDouble();
 		double ad = rand.nextDouble();
-		System.out.println("Vertical: "+fildSizeVertical+" Horizontal: "+fildSizeHorizontal);
+		//System.out.println("Vertical: "+fildSizeVertical+" Horizontal: "+fildSizeHorizontal);
         double C = fildSizeVertical/((8.0*Ad < 3)?(8.0*Ad+3):(8.0*Ad));
         double A = C*Ad;
         double P = fildSizeHorizontal/(3*Pd);
@@ -103,14 +124,19 @@ public class BattleField <T extends Tank> {
         // return coordinates of tanks
         return tankCoords;
     }
-    
+    /*
     public void startGame(){
-    	listOfTanks.get(0).listOfEnemies = listOfTanks;
-    	listOfTanks.get(1).listOfEnemies = listOfTanks;
-    	listOfTanks.get(0).setTubeDirections(0);
-    	listOfTanks.get(0).shotEnemy(null);
-    	listOfTanks.get(1).setTubeDirections(0);
-    	listOfTanks.get(1).shotEnemy(null);
+        for (int i = 0; i < listOfTanks.size(); i++) {
+            listOfTanks.get(i).listOfEnemies = listOfTanks;
+        }
+        while(listOfTanks.size() > 1) {
+            for (int i = 0; i < listOfTanks.size(); i++) {
+                //listOfTanks.get(i).setTubeDirections(0);
+                //listOfTanks.get(i).shotEnemy(null);
+                JavaFX.getManager().getStateList().get(i).start();//govnocod
+            }
+        }
+        System.out.println("Winner "+listOfTanks.get(0).name);
     }
-   
+   */
 }

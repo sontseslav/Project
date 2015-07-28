@@ -12,6 +12,7 @@ import java.util.Random;
 
 import javafx.scene.Scene;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -20,7 +21,7 @@ import javafx.scene.shape.Line;
 public abstract class Tank {
     protected int x;//coordinates of tank
     protected int y;
-    protected Line tube;
+    protected ArrayList<Shape> tankShape;
     protected Scene scene;
     protected String name;
     protected int armor;
@@ -29,26 +30,19 @@ public abstract class Tank {
     protected int life;
     protected int tubeDirection;
     protected int shootPower;
-    
-    protected LinkedList<String> warlords = new LinkedList<String>(){{//Anonymous class using
-        add("Alexander the Great");add("Leonidas I"); add("Genghis Khan"); 
-        add("Hannibal Barca"); add("Gaius Julius Caesar");add("Napoleon Bonaparte");
-        add("Spartacus");add("Salah-ad-Din");add("Stepan Bandera");add("Atilla");
-        add("Hernan Kortes");add("Oda Nobunaga");add("Eugen Konovalets");add("Nestor Makhno");
-    }};
 
     public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 
             ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection,*/ 
-            int x, int y,Line tube,Scene scene) {
+            int x, int y,ArrayList<Shape> tankShape,Scene scene) {
         Random rand = new Random();
-        this.name = (name != null)?name:warlords.remove(rand.nextInt(warlords.size()));//2 equal names may occur
+        this.name = (name != null)?name:BattleField.getWarlord(rand.nextInt(BattleField.getWarlordsSize()));
         this.armor = armor;
         //this.unitsOfFire = unitsOfFire;
         //this.listOfEnemies = listOfEnemies;
         this.life = life;
         this.x = x;                         //??
         this.y = y;                         //??
-        this.tube = tube;
+        this.tankShape = tankShape;
         this.scene = scene;
     }
     
@@ -65,7 +59,7 @@ public abstract class Tank {
     }
     
     public void getListOfEmenied(BattleField instance){
-        //this.listOfEnemies = instance.listOfTanks;
+        this.listOfEnemies = instance.getListOfTanks();
     }
     
     public String getHit(int hit){ //must be overriden in TankPC(Tank offender)
@@ -84,11 +78,11 @@ public abstract class Tank {
         return "Say take it";//and display points
     }
     
-    public void explode(){
+    public void explode(){//it must run JavaFXView - draw red circle, then light blue, remove tankShape life = 0;
         
     }
     
-    public abstract void shotEnemy(Tank target);
+    public abstract void shotEnemy(Tank target,double angle,double initialSpeed);
     public abstract String selectEnemy();//operates with 3 next methods and threats enemy(PC)
     public abstract int setTubeDirections(int step);
     public abstract int setShotPower(int step);

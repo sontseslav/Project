@@ -7,6 +7,7 @@ package control;
 
 
 import model.BattleField;
+import model.JavaFXView;
 import model.Tank;
 import view.AbstractViewer;
 import view.Console;
@@ -21,19 +22,8 @@ public class Main {//move javafx to thread
         //AbstractViewer absview = new Console();//size in chars+tankWidth
         //absview.drawLandscape();
         //absview.drawTanks(5);//12 max
-    	Runnable r = new JavaFXThread();
-    	Thread thread = new Thread(r);
-    	thread.start();
-    	//while(BattleField.getInstance() == null){}//wait BattleField to init
-    	//BattleField bf = BattleField.getInstance();
-    	//bf.startGame();
-    }
-}
-class JavaFXThread implements Runnable{
 
-	@Override
-	public void run() {
-		JavaFX.startJavaFX(2);//14 tanks max
-	}
-	
+		JavaFXView.startJavaFX(args,5); //14 max
+        //JavaFX.startJavaFX(10);
+    }
 }
