@@ -6,14 +6,9 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.scene.transform.Rotate;
 
 /**
  *
@@ -40,10 +35,10 @@ public class TankHuman extends Tank{
 
     @Override
     public void shotEnemy(Tank target,double angle,double initialSpeed) {//target always null add weapon in args
-        System.out.printf("Tank %s: angle = %.4f, initial speed = %.4f%n",this.name, angle, initialSpeed);
-        System.out.println("Babah!");
+        SmallMissile missile = new SmallMissile(angle,initialSpeed,this);
+        missile.fly();
     }
-    
+
     public void shotEnemy(){//should take coords from tube!
     	System.out.println("Babah!");
     }
@@ -66,7 +61,7 @@ public class TankHuman extends Tank{
     }
 
     @Override
-    public Missle setMissle() {
+    public Missile setMissle() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

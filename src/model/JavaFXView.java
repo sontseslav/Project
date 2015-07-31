@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JavaFXView extends Application {
+public class JavaFXView extends Application implements Observer{
     private static final int fieldWidth = 770;
     private static final int fieldHeight = 550;
     private static final int tankWidth = 18;
@@ -27,6 +27,7 @@ public class JavaFXView extends Application {
     private Canvas canvas;
     private Scene scene;
     private Line speed;
+    private Text speedDecimal;
     private Random rand;
     private ArrayList<Shape> tankShape;//needed?
     private static TubeRotationStateManager manager;
@@ -54,7 +55,7 @@ public class JavaFXView extends Application {
         scene = new Scene(root,fieldWidth, fieldHeight, Color.LIGHTBLUE);
         drawLandscape(gc);
         drawTanks(tankQuantity);
-        double initialSpeed = drawSpeedBar();
+        drawSpeedBar();
         primaryStage.setTitle("JATanks");
         primaryStage.setMaxHeight(fieldHeight + 25);
         primaryStage.setMinHeight(fieldHeight + 25);
@@ -66,8 +67,8 @@ public class JavaFXView extends Application {
         manager = new TubeRotationStateManager();
         //turn started while tank quantity > 1
         for(int i = 0; i < instance.getListOfTanks().size();i++) {
-            TubeRotationState state = new TubeRotationState(scene, (Line)instance.getListOfTanks().get(i).tankShape.get(7),speed,
-                    initialSpeed,instance.getListOfTanks().get(i));
+            TubeRotationState state = new TubeRotationState(scene, (Line)instance.getListOfTanks().get(i).tankShape.get(7),
+                    speed, speedDecimal, instance.getListOfTanks().get(i));
             manager.addState(state);//cycle for tank quantity | not tube - tank => tank instance in Tank
         }
         manager.runNextState();
@@ -92,33 +93,35 @@ public class JavaFXView extends Application {
         }
     }
 
-    private double drawSpeedBar(){
-        Rectangle bar = new Rectangle(10,10,100,30);
+    private void drawSpeedBar(){
+        Rectangle bar = new Rectangle(10,10,120,30);
         bar.setFill(Color.TRANSPARENT);
         bar.setStroke(Color.BLACK);
-        Text label = new Text(25,25,"Initial Speed");
+        Text label = new Text(15,25,"Missile velocity");
         label.setFont(Font.font("Verdana", 10));
         label.setFill(Color.BLACK);
-        double initialSpeed = rand.nextInt(50);
+        int initialSpeed = rand.nextInt(100);
         speed = new Line(20,32,20+initialSpeed,32);
+        speedDecimal = new Text(105,25,""+((int)(speed.getEndX() - speed.getStartX())));
+        speedDecimal.setFont(Font.font("Verdana", 10));
         speed.setStrokeWidth(3);
         speed.setStroke(Color.GREEN);
         speed.setFill(Color.GREEN);
         root.getChildren().add(speed);
+        root.getChildren().add(speedDecimal);
         root.getChildren().add(label);
         root.getChildren().add(bar);
-        return initialSpeed;
+        return;
     }
 
     public void drawTanks(int tankQuantity) {
         tankCoords = instance.getTankCoords(tankQuantity);
-        //manager = new TubeRotationStateManager();
         for(int i = 0; i < tankQuantity;i++){
             int x = (int)tankCoords[i][0];//adjust to the ground
             int y = (int)tankCoords[i][1] - 2;
             tankShape = this.setTank(x, y);
             TankHuman t = new TankHuman(null, 0, 100, x, y,tankShape,scene);
-            //t.setState(new TubeRotationState(scene,(Line)tankShape.get(7)));
+            t.addObserver(this);//adding observer
             Text txt = (Text)tankShape.get(1);
             txt.setText(t.name);
             txt = (Text)tankShape.get(2);
@@ -126,9 +129,7 @@ public class JavaFXView extends Application {
             txt = (Text)tankShape.get(3);
             txt.setText("H: "+t.life);
             instance.addToTankList(t);
-            //manager.addState(new TubeRotationState(scene, (Line)tankShape.get(7)));
         }
-
     }
 
     /**
@@ -189,5 +190,20 @@ public class JavaFXView extends Application {
     public void drawTankExplode(Tank tank) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void missileExplode(double x, double y, double r) {
+        for (Tank t : instance.getListOfTanks()){ //is this any tank explosion?
+            if(t.getX() == (int)x && t.getY() == (int)y){
+                for (int i = 0; i < t.tankShape.size();i++){
+                    root.getChildren().remove(t.tankShape.get(i));
+                }
+                break;
+            }
+        }
+        Circle explosion = new Circle(x,y,r);
+        explosion.setFill(Color.RED);
+        root.getChildren().add(explosion);
     }
 }

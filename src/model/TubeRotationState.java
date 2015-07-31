@@ -5,23 +5,25 @@ import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
 public class TubeRotationState {
     private final static int STEP = 2;
     private final Scene scene;
     private final Line tube;
+    private Text speedDecimal;
     private Line speed;
     private double angle;
-    private double initialSpeed;
+    private int initialSpeed;
     private Tank tank;
     private TubeRotationStateManager manager;
 
-    public TubeRotationState(Scene scene, Line tube,Line speed, double initialSpeed, Tank tank) {
+    public TubeRotationState(Scene scene, Line tube,Line speed, Text speedDecimal, Tank tank) {
         this.scene = scene;
         this.tube = tube;
+        this.speedDecimal = speedDecimal;
         this.speed = speed;
-        this.initialSpeed = initialSpeed;
         this.tank = tank;
     }
 
@@ -41,12 +43,15 @@ public class TubeRotationState {
     public void start(){
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) {//Check if we are TankHuman => tank = (TankHuman)tank
+            public void handle(KeyEvent event) {
                 if(!tank.isAlive()){
                     scene.setOnKeyPressed(null);
                     System.out.println(tank.name+" gone...");
+                    finish();
                     return;
                 }
+                //Check if we are TankHuman => tank = (TankHuman)tank
+                initialSpeed = Integer.parseInt(speedDecimal.getText());
                 switch (event.getCode()){
                     case LEFT:
                         /*Point2D leftPosition = tube.localToParent(tube.getEndX(),tube.getEndY());
@@ -72,44 +77,34 @@ public class TubeRotationState {
                         */
                         break;
                     case UP:
-                        initialSpeed = speed.getEndX();
+                        //Point2D toUP = speed.localToParent(speed.getEndX(),speed.getEndY());
+                        //initialSpeed = toUP.getX()-speed.getStartX();
+                        initialSpeed = Integer.parseInt(speedDecimal.getText());
                         if (initialSpeed < 100) {
                             initialSpeed++;
-                            speed.setEndX(initialSpeed);
+                            speed.setEndX(initialSpeed+speed.getStartX());
+                            speedDecimal.setText(initialSpeed+"");
                         }
                         break;
                     case DOWN:
-                        initialSpeed = speed.getEndX();
-                        if (initialSpeed - speed.getStartX() > 0) {
+                        //Point2D toDown = speed.localToParent(speed.getEndX(),speed.getEndY());
+                        //initialSpeed = toDown.getX()-speed.getStartX();
+                        initialSpeed = Integer.parseInt(speedDecimal.getText());
+                        if (initialSpeed > 0) {
                             initialSpeed--;
-                            speed.setEndX(initialSpeed);
+                            speed.setEndX(initialSpeed+speed.getStartX());
+                            speedDecimal.setText(initialSpeed + "");
                         }
                         break;
                     case ENTER:
-                        /*double x0 = tube.getStartX();
-                        double y0 = tube.getStartY();
-                        double x1 = tube.getEndX();
-                        double y1 = tube.getEndY();
-                        System.out.println(x0+":"+y0+";"+x1+":"+y1);
-                        Point2D lTP = tube.localToParent(tube.getEndX(),tube.getEndY());
-                        double x2 = lTP.getX();
-                        double y2 = lTP.getY();
-                        System.out.println(x2+":"+y2);
-                        if(x0<x2){
-                            angle = Math.toDegrees(Math.atan((y1 - y2)/(x2 - x0)));
-                        }else if(x2<x0){
-                            angle = Math.toDegrees(Math.atan((y1 - y2)/(x0 - x2)));
-                        }else{
-                            angle = 90;
-                        }*/
                         Point2D lTP = tube.localToParent(tube.getEndX(),tube.getEndY());
                         double x0 = tube.getStartX();
                         double y0 = tube.getStartY();
                         double x1 = lTP.getX();
                         double y1 = lTP.getY();
                         angle = Math.toDegrees(Math.atan2((y0 - y1),(x0 - x1)));
-                        angle = (angle > 90)?(180 - angle):angle;//! remove to preserve direction !
-                        initialSpeed -= speed.getStartX();
+                        //angle = (angle > 90)?(180 - angle):angle;//! remove to preserve direction !
+                        //initialSpeed -= speed.getStartX();
                         tank.shotEnemy(null,angle,initialSpeed);
                         finish();//final{}
                         return;
@@ -126,7 +121,7 @@ public class TubeRotationState {
         //set new class
         //getTank().setState(new TubeRotationState(scene,tube));
         if(tank.isAlive()){
-            TubeRotationState state = new TubeRotationState(scene,tube,speed,initialSpeed,tank);
+            TubeRotationState state = new TubeRotationState(scene,tube,speed,speedDecimal,tank);
             manager.addState(state);
         }
         manager.onStateFinished();

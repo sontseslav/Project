@@ -9,22 +9,26 @@ package model;
  *
  * @author user
  */
-public class SmallMissle extends Missle{
+public class SmallMissile extends Missile {
 
-    public SmallMissle() {
-        this.weight = 10;
-        this.imposedArea = 1;
-        this.yield = 10;
+    final int weight = 1;
+    final int imposedArea = 10;
+    final int yield = 10;
+
+    public SmallMissile(double angle, double initSpeed, Tank parentTank) {
+        super(angle,initSpeed,parentTank);
+        super.setMissileOptions(weight,imposedArea,yield);
     }
-
+/*
     @Override
     public void explode() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+*/
 
-    @Override
-    public int[][] fly() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /*@Override
+    public void fly() {
+        super.fly();
     }
-    
+*/
 }

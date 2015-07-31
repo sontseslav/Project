@@ -6,12 +6,7 @@
 package control;
 
 
-import model.BattleField;
 import model.JavaFXView;
-import model.Tank;
-import view.AbstractViewer;
-import view.Console;
-import view.JavaFX;
 
 /**
  *
@@ -23,7 +18,7 @@ public class Main {//move javafx to thread
         //absview.drawLandscape();
         //absview.drawTanks(5);//12 max
 
-		JavaFXView.startJavaFX(args,5); //14 max
+        JavaFXView.startJavaFX(args,5);//14 max
         //JavaFX.startJavaFX(10);
     }
 }
