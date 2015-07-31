@@ -72,18 +72,10 @@ public class JavaFXView extends Application implements Observer{
             manager.addState(state);//cycle for tank quantity | not tube - tank => tank instance in Tank
         }
         manager.runNextState();
-        /*for(Tank tank : instance.getListOfTanks()){//if robots present
-            tank.getListOfEnemies(instance);
-        }*/
-
-        /*while (instance.getListOfTanks().size() > 1){
-            //new turn
-            for(int i = 0;i < instance.getListOfTanks().size();i++){
-                TankHuman t = (TankHuman)instance.getListOfTanks().get(i);//only humans
-                t.getState().start();//rotate
-                //t.shotEnemy();
-            }
-        }*/
+        Text winner = new Text(50,50,instance.getListOfTanks().get(0)+"wins!");
+        winner.setFont(Font.font("Verdana", 30));
+        winner.setFill(Color.RED);
+        root.getChildren().add(winner);
     }
 
     public void drawLandscape(GraphicsContext gc) {//unchangeable

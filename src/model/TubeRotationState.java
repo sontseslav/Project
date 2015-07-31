@@ -103,8 +103,6 @@ public class TubeRotationState {
                         double x1 = lTP.getX();
                         double y1 = lTP.getY();
                         angle = Math.toDegrees(Math.atan2((y0 - y1),(x0 - x1)));
-                        //angle = (angle > 90)?(180 - angle):angle;//! remove to preserve direction !
-                        //initialSpeed -= speed.getStartX();
                         tank.shotEnemy(null,angle,initialSpeed);
                         finish();//final{}
                         return;
@@ -118,11 +116,12 @@ public class TubeRotationState {
     public void finish(){
         //Kill current
         scene.setOnKeyPressed(null);
-        //set new class
-        //getTank().setState(new TubeRotationState(scene,tube));
         if(tank.isAlive()){
             TubeRotationState state = new TubeRotationState(scene,tube,speed,speedDecimal,tank);
             manager.addState(state);
+        }
+        if (tank.listOfEnemies.size() == 1){
+            return;
         }
         manager.onStateFinished();
     }
