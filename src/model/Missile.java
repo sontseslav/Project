@@ -34,14 +34,14 @@ public abstract class Missile {
         this.yield = yield;
     }
 
-    public void explode(double x, double y,int imposedArea){
-        parentTank.missileExplode(x,y,imposedArea,yield);
+    public void flyMissile(ArrayList<double[]> missilePath, int imposedArea){
+        parentTank.flyMissile(missilePath, imposedArea, yield);
     }
 
     public void /*int[][]*/ fly() {
         final double g = 9.80665;//g constant
         angle += (angle == 90) ? 5 : 0;
-        boolean averse = angle > 90; // if true xh > x0 (x0 + l/2)
+        boolean averse = angle > 90;
         double angleRadian = (averse) ? Math.toRadians(180 - angle) : Math.toRadians(angle);
         double length = (Math.pow(initSpeed, 2) * Math.sin(2 * angleRadian)) / g;
         double height = (Math.pow(initSpeed, 2) * Math.pow(Math.sin(angleRadian), 2)) / (2 * g);
@@ -67,7 +67,7 @@ public abstract class Missile {
                         || y >= instance.getFildSizeVertical()-1){
                     System.out.printf("Angle=%.3f speed=%.3f posX=%s posY=%.3f hposX=%.3f hposY=%.3f X=%s Y=%.3f%n",
                             angle,initSpeed,posX,posY,heightPosX,heightPosY,x,y);
-                    explode(x,y,imposedArea);
+                    flyMissile(flyPath, imposedArea);
                     break;
                 }
                 x++;
@@ -81,7 +81,7 @@ public abstract class Missile {
                         || y >= instance.getFildSizeVertical()-1){
                     System.out.printf("Angle=%.3f speed=%.3f posX=%s posY=%.3f hposX=%.3f hposY=%.3f X=%s Y=%.3f%n",
                             angle,initSpeed,posX,posY,heightPosX,heightPosY,x,y);
-                    explode(x,y,imposedArea);
+                    flyMissile(flyPath, imposedArea);
                     break;
                 }
                 x--;

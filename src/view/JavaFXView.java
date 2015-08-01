@@ -1,7 +1,11 @@
-package model;/**
+package view;/**
  * Created by coder on 25.07.15.
  */
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,11 +17,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JavaFXView extends Application implements Observer{
+public class JavaFXView extends Application implements Observer {
     private static final int fieldWidth = 770;
     private static final int fieldHeight = 550;
     private static final int tankWidth = 18;
@@ -29,7 +35,8 @@ public class JavaFXView extends Application implements Observer{
     private Line speed;
     private Text speedDecimal;
     private Random rand;
-    private ArrayList<Shape> tankShape;//needed?
+    private ArrayList<Shape> tankShape;
+    private int index;
     private static TubeRotationStateManager manager;
     protected double[][] landscape;
     protected double[][] tankCoords;
@@ -72,10 +79,6 @@ public class JavaFXView extends Application implements Observer{
             manager.addState(state);//cycle for tank quantity | not tube - tank => tank instance in Tank
         }
         manager.runNextState();
-        Text winner = new Text(50,50,instance.getListOfTanks().get(0)+"wins!");
-        winner.setFont(Font.font("Verdana", 30));
-        winner.setFill(Color.RED);
-        root.getChildren().add(winner);
     }
 
     public void drawLandscape(GraphicsContext gc) {//unchangeable
@@ -148,7 +151,7 @@ public class JavaFXView extends Application implements Observer{
         final int holderW = 45;
         tankShape = new ArrayList<>();
         Rectangle tankPlace = new Rectangle(centerX-holderW/2-2,centerY-holderH+1.5*hTrack,holderW,holderH);
-        tankPlace.setStroke(Color.DARKVIOLET);
+        tankPlace.setStroke(Color.TRANSPARENT);
         tankPlace.setFill(Color.TRANSPARENT);
         tankShape.add(tankPlace);
         Text name = new Text(centerX-holderW/2-2,centerY+15,"");
@@ -179,11 +182,6 @@ public class JavaFXView extends Application implements Observer{
         return tankShape;
     }
 
-    public void drawTankExplode(Tank tank) {
-        // TODO Auto-generated method stub
-
-    }
-
     @Override
     public void missileExplode(double x, double y, double r) {
         for (Tank t : instance.getListOfTanks()){ //is this any tank explosion?
@@ -197,5 +195,51 @@ public class JavaFXView extends Application implements Observer{
         Circle explosion = new Circle(x,y,r);
         explosion.setFill(Color.RED);
         root.getChildren().add(explosion);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000),explosion);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+        ft.setCycleCount(1);
+        ft.play();
+        if (instance.getListOfTanks().size() == 1){
+            Text winner = new Text(10,70,instance.getListOfTanks().get(0)+"wins!");
+            winner.setFont(Font.font("Verdana", 25));
+            winner.setFill(Color.RED);
+            root.getChildren().add(winner);
+        }
+    }
+
+    @Override
+    public void missileFly(ArrayList<double[]> missilePath, double r) {
+/*
+        Circle missile = new Circle(3);
+        root.getChildren().add(missile);
+        index = 0;
+        while (index != missilePath.size()){
+            missile.setCenterX(missilePath.get(index)[0]);
+            missile.setCenterY(missilePath.get(index)[1]);
+            try {
+                Thread.sleep(20);
+            }catch (InterruptedException ex){}
+            index++;
+        }
+
+        new AnimationTimer(){
+
+            @Override
+            public void handle(long currentNanoSecs) {
+                System.out.println("start moving");
+                if (index == missilePath.size()){
+                    root.getChildren().remove(missile);
+                    this.stop();
+                    return;
+                }else {
+                    missile.setCenterX(missilePath.get(index)[0]);
+                    missile.setCenterY(missilePath.get(index)[1]);
+                    index++;
+                }
+            }
+        }.start();
+        */
+        missileExplode(missilePath.get(missilePath.size() - 1)[0], missilePath.get(missilePath.size() - 1)[1], r);
     }
 }

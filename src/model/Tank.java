@@ -20,17 +20,14 @@ import javafx.scene.text.Text;
 public abstract class Tank implements Observable{
     protected int x;//coordinates of tank
     protected int y;
-    protected ArrayList<Shape> tankShape;
+    public ArrayList<Shape> tankShape;
     protected Scene scene;
-    protected String name;
-    protected int armor;
+    public String name;
+    public int armor;
     protected HashMap<String,Integer> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
-    protected int life;
-    protected int tubeDirection;
-    protected int shootPower;
-    protected double missileX;
-    protected double missileY;
+    public int life;
+    protected ArrayList<double[]> missilePath;
     protected double explodeR;
     protected ArrayList<Observer> observers;
     protected BattleField instance;
@@ -95,6 +92,11 @@ public abstract class Tank implements Observable{
     }
 
     @Override
+    public String toString(){
+        return String.format("Tank %s %nwith armor %d and health %d%n",this.name,this.armor,this.life);
+    }
+
+    @Override
     public void addObserver(Observer o){
         observers.add(o);
     }
@@ -107,7 +109,7 @@ public abstract class Tank implements Observable{
     @Override
     public void notifyObservers(){
         for (Observer observer : observers){
-            observer.missileExplode(missileX,missileY,explodeR);
+            observer.missileFly(missilePath, explodeR);
         }
     }
 
@@ -117,9 +119,8 @@ public abstract class Tank implements Observable{
         }
     }
 
-    public void missileExplode(double x, double y, double r,int yield){
-        missileX = x;
-        missileY = y;
+    public void flyMissile(ArrayList<double[]> missilePath, double r, int yield){
+        this.missilePath = missilePath;
         explodeR = r;
         checkIfHitted(yield);
         notifyObservers();
@@ -129,9 +130,11 @@ public abstract class Tank implements Observable{
         for (Tank t : listOfEnemies){
             int X = t.getX();
             int Y = t.getY();
-            if ((X+7 > missileX-explodeR) && (X-7 < missileX+explodeR)){
+            if ((X+7 > missilePath.get(missilePath.size()-1)[0] - explodeR)
+                    && (X-7 < missilePath.get(missilePath.size()-1)[0] +explodeR)){
                 System.out.println("Tank "+t.name+" zone: "+(X-7)+":"+(X+7)+
-                        " missile "+(missileX-explodeR)+":"+(missileX+explodeR));
+                        " missile "+(missilePath.get(missilePath.size()-1)[0] -explodeR)
+                        +":"+(missilePath.get(missilePath.size()-1)[0] +explodeR));
                 t.getHit(yield);
                 break;
             }

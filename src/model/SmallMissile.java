@@ -21,7 +21,7 @@ public class SmallMissile extends Missile {
     }
 /*
     @Override
-    public void explode() {
+    public void flyMissile() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 */

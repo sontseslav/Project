@@ -6,7 +6,7 @@
 package control;
 
 
-import model.JavaFXView;
+import view.JavaFXView;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Main {//move javafx to thread
         //absview.drawLandscape();
         //absview.drawTanks(5);//12 max
 
-        JavaFXView.startJavaFX(args,5);//14 max
+        JavaFXView.startJavaFX(args,2);//14 max
         //JavaFX.startJavaFX(10);
     }
 }

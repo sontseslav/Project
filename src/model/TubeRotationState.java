@@ -4,7 +4,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
@@ -41,6 +43,7 @@ public class TubeRotationState {
 
 
     public void start(){
+        tank.tankShape.get(0).setStroke(Color.FORESTGREEN);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -116,6 +119,7 @@ public class TubeRotationState {
     public void finish(){
         //Kill current
         scene.setOnKeyPressed(null);
+        tank.tankShape.get(0).setStroke(Color.TRANSPARENT);
         if(tank.isAlive()){
             TubeRotationState state = new TubeRotationState(scene,tube,speed,speedDecimal,tank);
             manager.addState(state);
