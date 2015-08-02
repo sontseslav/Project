@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -205,6 +206,14 @@ public class JavaFXView extends Application implements Observer {
             winner.setFont(Font.font("Verdana", 25));
             winner.setFill(Color.RED);
             root.getChildren().add(winner);
+            SaveToDB saver = new SaveToDB(instance.getListOfTanks().get(0).name,
+                    instance.getListOfTanks().get(0).armor,
+                    instance.getListOfTanks().get(0).life);
+            try {
+                saver.saveToDB();
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
         }
     }
 
