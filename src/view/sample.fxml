@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Controller">
+    <center>
+        <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="452.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Game Settings">
+                    <content>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="185.0" minWidth="452.0" prefHeight="185.0" prefWidth="452.0">
+                            <children>
+                                <Spinner fx:id="mySpinner" layoutX="24.0" layoutY="69.0" />
+                                <Label layoutX="24.0" layoutY="42.0" text="Tank quantity" />
+                                <CheckBox fx:id="myCheckbox" layoutX="24.0" layoutY="119.0" mnemonicParsing="false" onAction="#setDatabase" text="Save results to database" />
+                                <Button fx:id="startButton" layoutX="250.0" layoutY="69.0" mnemonicParsing="false" onAction="#startTheGame" prefHeight="67.0" prefWidth="170.0" text="Start" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

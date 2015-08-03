@@ -2,10 +2,8 @@ package view;/**
  * Created by coder on 25.07.15.
  */
 
-import javafx.animation.AnimationTimer;
+import control.Main;
 import javafx.animation.FadeTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JavaFXView extends Application implements Observer {
+public class JavaFXView extends Application implements Observer{
     private static final int fieldWidth = 770;
     private static final int fieldHeight = 550;
     private static final int tankWidth = 18;
@@ -42,18 +40,23 @@ public class JavaFXView extends Application implements Observer {
     protected double[][] landscape;
     protected double[][] tankCoords;
 
-    public static void startJavaFX(String[] args, int tankQ) {
-        if (tankQ > fieldWidth/(tankWidth*3)){
+    public void startJavaFX(String[] args, int tankQ) {
+        if (tankQ > fieldWidth/(tankWidth*3)){//redundant
             System.out.println("Too many tanks");
             return;
         }
-        tankQuantity = tankQ;
+        tankQuantity = 5;
         instance = BattleField.getInstance(fieldWidth, fieldHeight,tankWidth);
         launch(args);
+
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        tankQuantity = Main.getTankQuantity();
+        instance = BattleField.getInstance(fieldWidth,fieldHeight,tankWidth);
+
         rand = new Random();
         landscape = instance.getLandscape();
         root = new Group();
@@ -65,8 +68,8 @@ public class JavaFXView extends Application implements Observer {
         drawTanks(tankQuantity);
         drawSpeedBar();
         primaryStage.setTitle("JATanks");
-        primaryStage.setMaxHeight(fieldHeight + 25);
-        primaryStage.setMinHeight(fieldHeight + 25);
+        primaryStage.setMaxHeight(fieldHeight + 27);
+        primaryStage.setMinHeight(fieldHeight + 27);
         primaryStage.setMaxWidth(fieldWidth);
         primaryStage.setMinWidth(fieldWidth);
         primaryStage.setScene(scene);
@@ -206,13 +209,15 @@ public class JavaFXView extends Application implements Observer {
             winner.setFont(Font.font("Verdana", 25));
             winner.setFill(Color.RED);
             root.getChildren().add(winner);
-            SaveToDB saver = new SaveToDB(instance.getListOfTanks().get(0).name,
-                    instance.getListOfTanks().get(0).armor,
-                    instance.getListOfTanks().get(0).life);
-            try {
-                saver.saveToDB();
-            }catch (SQLException ex){
-                ex.printStackTrace();
+            if(Main.getDatabaseSet()) {
+                SaveToDB saver = new SaveToDB(instance.getListOfTanks().get(0).name,
+                        instance.getListOfTanks().get(0).armor,
+                        instance.getListOfTanks().get(0).life);
+                try {
+                    saver.saveToDB();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

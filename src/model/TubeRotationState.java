@@ -50,6 +50,10 @@ public class TubeRotationState {
                 if(!tank.isAlive()){
                     scene.setOnKeyPressed(null);
                     System.out.println(tank.name+" gone...");
+                    //tank exploded - state changed
+                    //javafx.event.EventDispatcher is an interface, and JAXB can't handle interfaces. and so on:(
+                    //CurrentStateToXml currState = CurrentStateToXml.getInstance();
+                    //currState.processXml();
                     finish();
                     return;
                 }

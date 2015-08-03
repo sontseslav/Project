@@ -13,24 +13,33 @@ import javafx.scene.Scene;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author user
  */
+@XmlRootElement(name = "Tank")
 public abstract class Tank implements Observable{
     protected int x;//coordinates of tank
     protected int y;
     public ArrayList<Shape> tankShape;
     protected Scene scene;
+    @XmlElement(name = "Name")
     public String name;
+    @XmlElement(name = "Armor")
     public int armor;
     protected HashMap<String,Integer> unitsOfFire;
     protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
+    @XmlElement(name = "Health")
     public int life;
     protected ArrayList<double[]> missilePath;
     protected double explodeR;
     protected ArrayList<Observer> observers;
     protected BattleField instance;
+
+    public Tank(){}
 
     public Tank(String name,int armor, /*HashMap<String,Integer> unitsOfFire, 
             ArrayList<Tank> listOfEnemies,*/ int life, /*int tubeDirection,*/ 

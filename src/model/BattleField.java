@@ -7,6 +7,8 @@ package model;
 
 import view.JavaFX;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -15,7 +17,9 @@ import java.util.Random;
  *
  * @author user
  */
+@XmlRootElement(name = "BattleField")
 public class BattleField /*<T extends Tank>*/ {
+    @XmlElement(name = "ListOfTanks")
     private ArrayList<Tank> listOfTanks;
     private double[][] tankCoords;
     private int tankWidth;
@@ -36,6 +40,8 @@ public class BattleField /*<T extends Tank>*/ {
         this.tankWidth = tankWidth;
         this.listOfTanks = new ArrayList<>();
     }
+
+    public BattleField(){}
 
     public int getFildSizeHorizontal() {
         return fildSizeHorizontal;

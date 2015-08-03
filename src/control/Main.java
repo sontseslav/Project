@@ -6,19 +6,36 @@
 package control;
 
 
-import view.JavaFXView;
+import view.InitialJFX;
 
 /**
  *
  * @author user
  */
 public class Main {//move javafx to thread
-    public static void main(String[] args) {
+    private static int tankQuantity;
+    private static boolean isDatabaseSet;
+
+    public static void main(String[] args) throws Exception{
         //AbstractViewer absview = new Console();//size in chars+tankWidth
         //absview.drawLandscape();
         //absview.drawTanks(5);//12 max
+        InitialJFX.startInitialJFX(args);
+    }
 
-        JavaFXView.startJavaFX(args,2);//14 max
-        //JavaFX.startJavaFX(10);
+    public static void setTankQuantity(int tankQuantity) {
+        Main.tankQuantity = tankQuantity;
+    }
+
+    public static void setIsDatabaseSet(boolean isDatabaseSet) {
+        Main.isDatabaseSet = isDatabaseSet;
+    }
+
+    public static boolean getDatabaseSet() {
+        return isDatabaseSet;
+    }
+
+    public static int getTankQuantity() {
+        return tankQuantity;
     }
 }
