@@ -57,6 +57,7 @@ public class SaveToDB {
         }finally {
             connection.commit();
             connection.setAutoCommit(true);
+            connection.close();
         }
     }
 }
