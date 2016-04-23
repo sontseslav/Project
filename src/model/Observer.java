@@ -1,5 +1,6 @@
 package model;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 
 /**

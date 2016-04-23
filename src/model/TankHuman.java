@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.shape.Shape;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author user
  */
+@XmlRootElement(name = "TankHuman")
 public class TankHuman extends Tank{
 	private TubeRotationState state;
 	private int count;
@@ -24,6 +27,8 @@ public class TankHuman extends Tank{
             int x, int y,ArrayList<Shape> tankShape,Scene scene) {
         super(name, armor, /*unitsOfFire, listOfEnemies,*/ life, /*tubeDirection,*/ x, y,tankShape,scene);
     }
+
+    public TankHuman(){}
 
     public TubeRotationState getState() {
         return state;
@@ -64,5 +69,5 @@ public class TankHuman extends Tank{
     public Missile setMissle() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

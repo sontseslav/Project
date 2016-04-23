@@ -31,7 +31,8 @@ public abstract class Tank implements Observable{
     @XmlElement(name = "Armor")
     public int armor;
     protected HashMap<String,Integer> unitsOfFire;
-    protected ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
+    @XmlElement(name = "ListOfAllTanks")
+    public ArrayList<Tank> listOfEnemies;//beware! you are in enemies list
     @XmlElement(name = "Health")
     public int life;
     protected ArrayList<double[]> missilePath;
@@ -155,5 +156,39 @@ public abstract class Tank implements Observable{
     public abstract int setTubeDirections(int step);
     public abstract int setShotPower(int step);
     public abstract Missile setMissle();
-    
+
+    //Getters and Setters for XML
+
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public ArrayList<Tank> getListOfEnemies() {
+        return listOfEnemies;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public void setListOfEnemies(ArrayList<Tank> listOfEnemies) {
+        this.listOfEnemies = listOfEnemies;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

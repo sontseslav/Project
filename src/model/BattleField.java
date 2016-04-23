@@ -5,8 +5,6 @@
  */
 package model;
 
-import view.JavaFX;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -17,9 +15,7 @@ import java.util.Random;
  *
  * @author user
  */
-@XmlRootElement(name = "BattleField")
-public class BattleField /*<T extends Tank>*/ {
-    @XmlElement(name = "ListOfTanks")
+public class BattleField {
     private ArrayList<Tank> listOfTanks;
     private double[][] tankCoords;
     private int tankWidth;
@@ -40,8 +36,6 @@ public class BattleField /*<T extends Tank>*/ {
         this.tankWidth = tankWidth;
         this.listOfTanks = new ArrayList<>();
     }
-
-    public BattleField(){}
 
     public int getFildSizeHorizontal() {
         return fildSizeHorizontal;
@@ -130,19 +124,5 @@ public class BattleField /*<T extends Tank>*/ {
         // return coordinates of tanks
         return tankCoords;
     }
-    /*
-    public void startGame(){
-        for (int i = 0; i < listOfTanks.size(); i++) {
-            listOfTanks.get(i).listOfEnemies = listOfTanks;
-        }
-        while(listOfTanks.size() > 1) {
-            for (int i = 0; i < listOfTanks.size(); i++) {
-                //listOfTanks.get(i).setTubeDirections(0);
-                //listOfTanks.get(i).shotEnemy(null);
-                JavaFX.getManager().getStateList().get(i).start();//govnocod
-            }
-        }
-        System.out.println("Winner "+listOfTanks.get(0).name);
-    }
-   */
+
 }
